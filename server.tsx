@@ -1,8 +1,9 @@
 //Dependencies
-const express = require('express')
+import express, { Request, Response } from 'express';
 const app = express()
 const { Sequelize } = require('sequelize')
 const cors = require('cors')
+
 
 
 //Configuration 
@@ -12,7 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 //Root
-app.get('/', (req,res) => {
+app.get('/', (req: Request ,res: Response) => {
     res.status(200).json({
         message: 'Welcome to OrderIn!'
     })

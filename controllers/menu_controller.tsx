@@ -1,11 +1,13 @@
 //dependencies 
-const menus = require('express').Router()
-const db = require('../models')
-const { Menu } = db
-const { Op } = require('sequelize')
+import express, { Request, Response } from 'express';
+import db from '../models';
+import { Op } from 'sequelize';
+
+const menus = express.Router();
+const { Menu } = db;
 
 //menu
-menus.get('/', async (req,res) => {
+menus.get('/', async (req: Request,res: Response) => {
     try { 
         const foundItem = await Menu.findAll({
             order: [ [ 'id', 'ASC'] ],
@@ -20,7 +22,7 @@ menus.get('/', async (req,res) => {
 })
 
 //specific menu item
-menus.get('/:id', async (req,res) => {
+menus.get('/:id', async (req: Request,res: Response) => {
     try{
         const foundItem = await Menu.findOne({
             where: { order_id: req.params.id }
@@ -31,7 +33,7 @@ menus.get('/:id', async (req,res) => {
     }
 })
 //create Item
-menus.post('/', async (req, res) => {
+menus.post('/', async (req: Request,res: Response) => {
   try {
     // Exclude the "id" attribute from the request body
     const { id, ...menuItemData } = req.body;
@@ -44,7 +46,7 @@ menus.post('/', async (req, res) => {
 });
 
 // update menu item
-menus.put('/:id', async (req, res) => {
+menus.put('/:id', async (req: Request,res: Response) => {
     try {
       const { food_name, descript, price } = req.body;
       const updatedMenu = await Menu.update(
@@ -68,7 +70,7 @@ menus.put('/:id', async (req, res) => {
   });
 
 //delete menu item
-menus.delete('/:id', async (req,res) => {
+menus.delete('/:id', async (req: Request,res: Response) => {
   try{ 
     console.log(req.params.id); // Check that the correct id is being received
     const deletedMenu = await Menu.destroy({
